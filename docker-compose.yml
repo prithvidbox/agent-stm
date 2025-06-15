@@ -54,6 +54,22 @@ services:
       timeout: 3s
       retries: 3
 
+  # DuckDuckGo MCP Server for web search
+  duckduckgo-mcp:
+    build: ./mcp-servers/duckduckgo
+    container_name: chatbot-duckduckgo-mcp
+    ports:
+      - "3004:3004"
+    environment:
+      - MCP_SERVER_PORT=3004
+      - MCP_SERVER_HOST=0.0.0.0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3004/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
 volumes:
   redis_data:
     driver: local

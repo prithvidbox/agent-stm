@@ -47,6 +47,7 @@ A comprehensive chatbot testing platform featuring advanced semantic memory, MCP
 - **Real-time Discovery**: Dynamic tool and resource discovery
 - **Error Handling**: Robust error handling and retry mechanisms
 - **Usage Logging**: Comprehensive logging of tool usage
+- **DuckDuckGo Search**: Web search capabilities with content fetching
 
 ### 📊 Analytics & Testing
 - **System Health Monitoring**: Real-time system status tracking

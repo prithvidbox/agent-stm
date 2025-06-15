@@ -68,6 +68,14 @@ export class MCPManager {
         port: 3003,
         category: 'utilities',
         enabled: false
+      },
+      {
+        name: 'duckduckgo',
+        description: 'DuckDuckGo web search and content fetching capabilities',
+        url: 'http://localhost:3004',
+        port: 3004,
+        category: 'search',
+        enabled: process.env.DUCKDUCKGO_ENABLED !== 'false'
       }
     ];
 
