@@ -1,6 +1,22 @@
-# Chatbot Playground
+# Agent STM - Semantic Memory Chatbot Playground
 
-A comprehensive chatbot testing platform featuring MCP (Model Context Protocol) support, LangChain integration, advanced memory systems, and RAG (Retrieval-Augmented Generation) capabilities.
+A comprehensive chatbot testing platform featuring advanced semantic memory, MCP (Model Context Protocol) support, LangChain integration, and RAG (Retrieval-Augmented Generation) capabilities. This playground is specifically designed for testing and developing Agent Short-Term Memory (STM) systems with sophisticated context management.
+
+## 🧠 Semantic Memory Features
+
+### Advanced Memory Architecture
+- **Semantic Memory**: Vector embeddings with OpenAI for context similarity
+- **Short-term Memory**: Session-based memory for immediate context
+- **Long-term Memory**: Persistent memory with importance scoring
+- **Entity Relationship Tracking**: Advanced entity extraction and relationship mapping
+- **Context Fusion**: Intelligent merging of temporal and semantic contexts
+
+### Memory Testing Capabilities
+- **Multi-turn Conversations**: Complex conversation flow testing
+- **Entity Recall**: Test entity memory across sessions
+- **Role Change Handling**: Dynamic entity relationship updates
+- **Pronoun Resolution**: Advanced coreference resolution
+- **Context Corrections**: Handle content modifications and updates
 
 ## Features
 
@@ -11,6 +27,7 @@ A comprehensive chatbot testing platform featuring MCP (Model Context Protocol) 
 - **Context-Aware Responses**: Intelligent context management across conversations
 
 ### 🧠 Memory Systems
+- **Semantic Memory**: Vector embeddings with similarity search
 - **Short-term Memory**: Session-based memory for immediate context
 - **Long-term Memory**: Persistent memory with importance scoring
 - **Entity Extraction**: Automatic extraction of names, dates, emails, etc.
@@ -41,11 +58,14 @@ A comprehensive chatbot testing platform featuring MCP (Model Context Protocol) 
 ## Architecture
 
 ```
-chatbot-playground/
+agent-stm/
 ├── backend/                 # Node.js/Express backend
 │   ├── src/
 │   │   ├── chatbot/        # Main chatbot engine
-│   │   ├── memory/         # Memory management system
+│   │   ├── memory/         # Advanced memory management system
+│   │   │   ├── MemoryManager.js           # Base memory manager
+│   │   │   ├── SemanticMemoryManager.js   # Semantic memory with embeddings
+│   │   │   └── EntityRelationshipManager.js # Entity relationship tracking
 │   │   ├── rag/            # RAG implementation
 │   │   ├── mcp/            # MCP client
 │   │   ├── database/       # SQLite database manager
@@ -56,7 +76,10 @@ chatbot-playground/
 │   ├── index.html
 │   ├── styles.css
 │   └── script.js
-└── docs/                   # Documentation
+├── docs/                   # Documentation
+├── MEMORY_MANAGEMENT_ARCHITECTURE.md  # Detailed memory architecture
+├── SECURITY.md            # Security guidelines
+└── GIT_SECURITY_SETUP.md  # Git security setup guide
 ```
 
 ## Quick Start
@@ -70,7 +93,7 @@ chatbot-playground/
 
 1. **Clone and setup the project:**
 ```bash
-cd chatbot-playground/backend
+cd agent-stm/backend
 npm install
 ```
 
@@ -107,8 +130,15 @@ DB_PATH=./data/chatbot.db
 MCP_SERVER_URL=ws://localhost:3000
 MCP_ENABLED=true
 
+# Semantic Memory Configuration
+USE_SEMANTIC_MEMORY=true
+SEMANTIC_SIMILARITY_THRESHOLD=0.75
+MAX_SEMANTIC_CONTEXT=5
+SEMANTIC_WEIGHT=0.6
+EMBEDDING_MODEL=text-embedding-3-small
+
 # Memory Configuration
-SHORT_TERM_MEMORY_SIZE=10
+SHORT_TERM_MEMORY_SIZE=20
 LONG_TERM_MEMORY_THRESHOLD=5
 
 # RAG Configuration
@@ -121,33 +151,67 @@ CHUNK_OVERLAP=200
 
 ### 1. Chat Interface
 - Start chatting immediately with the AI assistant
-- The chatbot has access to memory, RAG, and MCP tools
+- The chatbot has access to semantic memory, RAG, and MCP tools
 - View real-time context information in message metadata
 - Export chat history as JSON
 
-### 2. Memory Testing
+### 2. Semantic Memory Testing
+- **Entity Recall**: Test "I have a friend named Rahul. He's a data scientist at Google." → "What does Rahul do?"
+- **Role Changes**: Test "Sara is the manager of the sales team." → "Actually, she's now working in marketing." → "Which team is Sara part of now?"
+- **Complex Scenarios**: Multi-turn conversations with context evolution
+- **Relationship Tracking**: Entity relationship updates and corrections
+
+### 3. Memory Testing
 - **Short-term Memory**: Test session-based memory retention
 - **Long-term Memory**: Test persistent memory with importance scoring
 - View memory statistics and current memory state
 - Test entity extraction and sentiment analysis
 
-### 3. RAG System
+### 4. RAG System
 - **Upload Documents**: Drag and drop files or use the file picker
 - **Add Text**: Directly input text content for indexing
 - **Search**: Query your document collection
 - **View Documents**: Browse uploaded documents and their metadata
 
-### 4. MCP Integration
+### 5. MCP Integration
 - **View Status**: Check MCP server connection status
 - **Browse Tools**: See available MCP tools and their descriptions
 - **Test Tools**: Execute MCP tools with custom parameters
 - **Monitor Usage**: View MCP tool usage logs
 
-### 5. Testing & Analytics
-- **Comprehensive Tests**: Run full system tests
-- **Individual Tests**: Test specific components
-- **System Health**: Monitor system status and performance
-- **Analytics**: View usage statistics and session history
+## Semantic Memory Architecture
+
+The semantic memory system implements a sophisticated multi-layered approach:
+
+### Memory Layers
+1. **Short-Term Memory (STM)**: In-memory storage with session isolation
+2. **Long-Term Memory (LTM)**: Persistent SQLite storage for important information
+3. **Semantic Memory**: Vector embeddings with similarity search
+
+### Key Features
+- **Vector Embeddings**: OpenAI text-embedding-3-small for semantic understanding
+- **Context Fusion**: Intelligent merging of temporal and semantic contexts
+- **Entity Relationships**: Advanced entity extraction and relationship tracking
+- **Session Isolation**: Perfect separation between different conversation sessions
+- **Automatic Promotion**: Smart promotion from STM to LTM based on importance
+
+### Testing Scenarios
+The system has been tested with complex scenarios including:
+- Performance review conversations with multiple context updates
+- Travel planning with pronoun resolution and context switching
+- Entity relationship tracking with corrections and modifications
+- Multi-document conversations with cross-referencing
+
+## Security
+
+This project implements comprehensive security measures:
+
+- **Environment Protection**: All sensitive data in environment variables
+- **Pre-commit Hooks**: Automatic scanning for exposed secrets
+- **Comprehensive .gitignore**: Protection for all sensitive file types
+- **Security Documentation**: Detailed security guidelines and procedures
+
+See `SECURITY.md` and `GIT_SECURITY_SETUP.md` for detailed security information.
 
 ## API Reference
 
@@ -174,112 +238,11 @@ CHUNK_OVERLAP=200
 - `POST /api/mcp/tools/:toolName` - Execute tool
 - `GET /api/mcp/resources` - List available resources
 
-### System Endpoints
-- `GET /api/system/health` - System health check
-- `GET /api/system/stats` - System statistics
-- `POST /api/test/complete` - Run comprehensive tests
+## Documentation
 
-## Technical Details
-
-### Memory System
-The memory system implements a two-tier approach:
-
-1. **Short-term Memory**: In-memory storage for current session context
-   - Configurable size limit (default: 10 messages)
-   - Entity extraction and sentiment analysis
-   - Topic classification
-   - Automatic promotion to long-term memory
-
-2. **Long-term Memory**: Persistent SQLite storage for important information
-   - Importance scoring algorithm
-   - Access frequency tracking
-   - Contextual retrieval based on current conversation
-
-### RAG Implementation
-The RAG system uses:
-
-- **OpenAI Embeddings**: text-embedding-ada-002 model
-- **Vector Storage**: In-memory vector store (MemoryVectorStore)
-- **Text Splitting**: Recursive character text splitter
-- **Document Processing**: Support for multiple file formats
-- **Semantic Search**: Similarity search with configurable thresholds
-
-### MCP Integration
-The MCP client provides:
-
-- **WebSocket Communication**: Real-time connection to MCP servers
-- **Tool Discovery**: Automatic discovery of available tools
-- **Resource Access**: Access to external data sources
-- **Error Handling**: Robust error handling and reconnection
-- **Usage Logging**: Comprehensive logging for debugging
-
-## Development
-
-### Project Structure
-```
-backend/src/
-├── chatbot/
-│   └── ChatbotEngine.js      # Main orchestration engine
-├── memory/
-│   └── MemoryManager.js      # Memory management
-├── rag/
-│   └── RAGSystem.js          # RAG implementation
-├── mcp/
-│   └── MCPClient.js          # MCP client
-├── database/
-│   └── DatabaseManager.js   # SQLite operations
-└── routes/
-    └── index.js              # API routes
-```
-
-### Adding New Features
-
-1. **New Memory Types**: Extend `MemoryManager.js`
-2. **Document Formats**: Add processors to `RAGSystem.js`
-3. **MCP Tools**: Implement in external MCP servers
-4. **API Endpoints**: Add routes to `routes/index.js`
-
-### Testing
-
-The application includes comprehensive testing capabilities:
-
-- **Unit Tests**: Test individual components
-- **Integration Tests**: Test system interactions
-- **End-to-End Tests**: Test complete workflows
-- **Performance Tests**: Monitor system performance
-
-## Troubleshooting
-
-### Common Issues
-
-1. **OpenAI API Errors**
-   - Verify API key is correct
-   - Check API quota and billing
-   - Ensure network connectivity
-
-2. **Memory Issues**
-   - Check database permissions
-   - Verify SQLite installation
-   - Monitor memory usage
-
-3. **RAG Problems**
-   - Verify document upload permissions
-   - Check embedding generation
-   - Monitor vector store size
-
-4. **MCP Connection Issues**
-   - Verify MCP server is running
-   - Check WebSocket connectivity
-   - Review MCP server logs
-
-### Debugging
-
-Enable debug logging by setting:
-```env
-NODE_ENV=development
-```
-
-Check the browser console and server logs for detailed error information.
+- **MEMORY_MANAGEMENT_ARCHITECTURE.md**: Detailed memory system architecture
+- **SECURITY.md**: Security guidelines and best practices
+- **GIT_SECURITY_SETUP.md**: Git security setup guide
 
 ## Contributing
 
@@ -287,7 +250,8 @@ Check the browser console and server logs for detailed error information.
 2. Create a feature branch
 3. Make your changes
 4. Add tests for new functionality
-5. Submit a pull request
+5. Follow security guidelines
+6. Submit a pull request
 
 ## License
 
