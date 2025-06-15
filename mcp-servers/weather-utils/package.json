@@ -1,0 +1,19 @@
+{
+  "name": "weather-utils-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server with weather and utility tools",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "node-fetch": "^3.3.2"
+  },
+  "keywords": [
+    "mcp",
+    "weather",
+    "utilities"
+  ]
+}

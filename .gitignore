@@ -1,0 +1,231 @@
+# ================================
+# SECURITY - SENSITIVE FILES
+# ================================
+
+# Environment files with secrets
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+.env.enhanced
+.env.production.bak
+backend/.env
+backend/.env.local
+backend/.env.development
+backend/.env.test
+backend/.env.production
+backend/.env.staging
+backend/.env.enhanced
+backend/.env.production.bak
+
+# API Keys and Secrets
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+config/secrets/
+.secrets
+
+# ================================
+# DATABASES & DATA
+# ================================
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+chatbot.db
+backend/data/chatbot.db
+backend/data/*.db
+
+# Database dumps
+*.sql.gz
+*.dump
+backup/
+backups/
+
+# Vector stores and embeddings
+backend/data/vector_store/
+data/vector_store/
+*.vector
+*.embeddings
+
+# Uploaded files
+uploads/
+backend/data/uploads/
+data/uploads/
+*.pdf
+*.doc
+*.docx
+*.txt
+*.csv
+*.xlsx
+
+# ================================
+# LOGS & TEMPORARY FILES
+# ================================
+
+# Log files
+logs/
+*.log
+data/logs/
+backend/logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# ================================
+# NODE.JS
+# ================================
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.test
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# ================================
+# DEVELOPMENT TOOLS
+# ================================
+
+# IDE files
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ================================
+# BUILD & DEPLOYMENT
+# ================================
+
+# Build outputs
+build/
+dist/
+out/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# ================================
+# TESTING & TEMPORARY
+# ================================
+
+# Test files with sensitive data
+test-data/
+test-results/
+*.test.local.*
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# ================================
+# CUSTOM PROJECT FILES
+# ================================
+
+# Custom test files with potentially sensitive data
+symantic_stm_testing.txt
+test-conversations/
+conversation-logs/
+
+# MCP server configurations with potential secrets
+mcp-servers/*/config.json
+mcp-servers/*/.env
+
+# Any files ending with .local (for local overrides)
+*.local.*
+*.local
+
+# Performance and monitoring data
+performance/
+monitoring/
+metrics/
+
+# AI model files (can be large)
+*.model
+*.weights
+models/
+checkpoints/

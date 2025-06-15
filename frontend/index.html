@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Playground - MCP, LangChain, Memory & RAG</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1><i class="fas fa-robot"></i> Chatbot Playground</h1>
+                <p>Testing MCP, LangChain, Memory Systems & RAG</p>
+                <div class="system-status" id="systemStatus">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <span id="statusText">Connecting...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <nav class="sidebar-nav">
+                    <button class="nav-btn active" data-tab="chat">
+                        <i class="fas fa-comments"></i> Chat
+                    </button>
+                    <button class="nav-btn" data-tab="memory">
+                        <i class="fas fa-brain"></i> Memory
+                    </button>
+                    <button class="nav-btn" data-tab="rag">
+                        <i class="fas fa-search"></i> RAG
+                    </button>
+                    <button class="nav-btn" data-tab="mcp">
+                        <i class="fas fa-tools"></i> MCP
+                    </button>
+                    <button class="nav-btn" data-tab="testing">
+                        <i class="fas fa-flask"></i> Testing
+                    </button>
+                    <button class="nav-btn" data-tab="analytics">
+                        <i class="fas fa-chart-bar"></i> Analytics
+                    </button>
+                </nav>
+
+                <!-- Session Info -->
+                <div class="session-info">
+                    <h3>Session Info</h3>
+                    <div class="info-item">
+                        <label>Session ID:</label>
+                        <span id="sessionId">-</span>
+                        <button id="newSessionBtn" class="btn-small">New</button>
+                    </div>
+                    <div class="info-item">
+                        <label>User ID:</label>
+                        <input type="text" id="userId" value="user-001" class="input-small">
+                    </div>
+                    <div class="info-item">
+                        <label>Messages:</label>
+                        <span id="messageCount">0</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Chat Tab -->
+                <div class="tab-content active" id="chatTab">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="welcome-message">
+                                <h3>Welcome to Chatbot Playground!</h3>
+                                <p>This chatbot has advanced capabilities including:</p>
+                                <ul>
+                                    <li><strong>Memory Systems:</strong> Short-term and long-term memory</li>
+                                    <li><strong>RAG:</strong> Retrieval-Augmented Generation from documents</li>
+                                    <li><strong>MCP:</strong> Model Context Protocol tool integration</li>
+                                    <li><strong>LangChain:</strong> Advanced language model orchestration</li>
+                                </ul>
+                                <p>Start chatting to test these features!</p>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <div class="input-group">
+                                <input type="text" id="messageInput" placeholder="Type your message..." class="chat-input">
+                                <button id="sendBtn" class="send-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <div class="chat-controls">
+                                <button id="clearChatBtn" class="btn-secondary">
+                                    <i class="fas fa-trash"></i> Clear Chat
+                                </button>
+                                <button id="exportChatBtn" class="btn-secondary">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                                <div class="tools-dropdown">
+                                    <button id="toolsDropdownBtn" class="btn-secondary">
+                                        <i class="fas fa-tools"></i> Tools <span id="toolsCount">(0)</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div id="toolsDropdownContent" class="tools-dropdown-content">
+                                        <div class="tools-header">
+                                            <h4>Available MCP Tools</h4>
+                                            <span id="toolsStatus" class="tools-status">Loading...</span>
+                                        </div>
+                                        <div id="toolsList" class="tools-list-dropdown">
+                                            <p>Loading tools...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Memory Tab -->
+                <div class="tab-content" id="memoryTab">
+                    <div class="memory-container">
+                        <div class="memory-section">
+                            <h3>Short-term Memory</h3>
+                            <div class="memory-controls">
+                                <button id="refreshShortMemoryBtn" class="btn-primary">
+                                    <i class="fas fa-refresh"></i> Refresh
+                                </button>
+                                <button id="testShortMemoryBtn" class="btn-secondary">
+                                    <i class="fas fa-flask"></i> Test
+                                </button>
+                            </div>
+                            <div id="shortTermMemory" class="memory-display">
+                                <p>No short-term memory data available</p>
+                            </div>
+                        </div>
+
+                        <div class="memory-section">
+                            <h3>Long-term Memory</h3>
+                            <div class="memory-controls">
+                                <button id="refreshLongMemoryBtn" class="btn-primary">
+                                    <i class="fas fa-refresh"></i> Refresh
+                                </button>
+                                <button id="testLongMemoryBtn" class="btn-secondary">
+                                    <i class="fas fa-flask"></i> Test
+                                </button>
+                            </div>
+                            <div id="longTermMemory" class="memory-display">
+                                <p>No long-term memory data available</p>
+                            </div>
+                        </div>
+
+                        <div class="memory-section">
+                            <h3>Memory Statistics</h3>
+                            <div id="memoryStats" class="stats-display">
+                                <p>Loading memory statistics...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RAG Tab -->
+                <div class="tab-content" id="ragTab">
+                    <div class="rag-container">
+                        <div class="rag-section">
+                            <h3>Document Upload</h3>
+                            <div class="upload-area" id="uploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop files here or click to browse</p>
+                                <p class="upload-hint">Supported: .txt, .md, .pdf, .docx, .json</p>
+                                <input type="file" id="fileInput" accept=".txt,.md,.pdf,.docx,.json" multiple hidden>
+                            </div>
+                            <div class="upload-controls">
+                                <input type="text" id="documentTitle" placeholder="Document title (optional)" class="input-field">
+                                <textarea id="documentDescription" placeholder="Document description (optional)" class="textarea-field"></textarea>
+                                <input type="text" id="documentTags" placeholder="Tags (comma-separated)" class="input-field">
+                            </div>
+                        </div>
+
+                        <div class="rag-section">
+                            <h3>Add Text Document</h3>
+                            <textarea id="textContent" placeholder="Paste your text content here..." class="textarea-large"></textarea>
+                            <button id="addTextBtn" class="btn-primary">
+                                <i class="fas fa-plus"></i> Add Text Document
+                            </button>
+                        </div>
+
+                        <div class="rag-section">
+                            <h3>Search Documents</h3>
+                            <div class="search-controls">
+                                <input type="text" id="searchQuery" placeholder="Enter search query..." class="input-field">
+                                <button id="searchBtn" class="btn-primary">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+                                <button id="testRagBtn" class="btn-secondary">
+                                    <i class="fas fa-flask"></i> Test RAG
+                                </button>
+                            </div>
+                            <div id="searchResults" class="search-results">
+                                <p>No search results</p>
+                            </div>
+                        </div>
+
+                        <div class="rag-section">
+                            <h3>Documents</h3>
+                            <div class="document-controls">
+                                <button id="refreshDocsBtn" class="btn-primary">
+                                    <i class="fas fa-refresh"></i> Refresh
+                                </button>
+                                <button id="ragStatsBtn" class="btn-secondary">
+                                    <i class="fas fa-chart-bar"></i> Stats
+                                </button>
+                            </div>
+                            <div id="documentsList" class="documents-list">
+                                <p>Loading documents...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MCP Tab -->
+                <div class="tab-content" id="mcpTab">
+                    <div class="mcp-container">
+                        <div class="mcp-section">
+                            <h3>MCP Status</h3>
+                            <div id="mcpStatus" class="status-display">
+                                <p>Loading MCP status...</p>
+                            </div>
+                            <button id="refreshMcpBtn" class="btn-primary">
+                                <i class="fas fa-refresh"></i> Refresh Status
+                            </button>
+                        </div>
+
+                        <div class="mcp-section">
+                            <h3>Available Tools</h3>
+                            <div id="mcpTools" class="tools-list">
+                                <p>Loading tools...</p>
+                            </div>
+                        </div>
+
+                        <div class="mcp-section">
+                            <h3>Available Resources</h3>
+                            <div id="mcpResources" class="resources-list">
+                                <p>Loading resources...</p>
+                            </div>
+                        </div>
+
+                        <div class="mcp-section">
+                            <h3>Test Tool</h3>
+                            <div class="tool-test">
+                                <select id="toolSelect" class="select-field">
+                                    <option value="">Select a tool...</option>
+                                </select>
+                                <textarea id="toolParameters" placeholder='{"param1": "value1"}' class="textarea-field"></textarea>
+                                <button id="testToolBtn" class="btn-primary">
+                                    <i class="fas fa-play"></i> Execute Tool
+                                </button>
+                            </div>
+                            <div id="toolResults" class="tool-results">
+                                <p>No tool results</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testing Tab -->
+                <div class="tab-content" id="testingTab">
+                    <div class="testing-container">
+                        <div class="test-section">
+                            <h3>Comprehensive Testing</h3>
+                            <p>Run comprehensive tests on all systems</p>
+                            <div class="test-options">
+                                <label><input type="checkbox" id="testShortMemory" checked> Short-term Memory</label>
+                                <label><input type="checkbox" id="testLongMemory" checked> Long-term Memory</label>
+                                <label><input type="checkbox" id="testRAGSystem" checked> RAG System</label>
+                                <label><input type="checkbox" id="testMCPSystem" checked> MCP System</label>
+                            </div>
+                            <button id="runCompleteTestBtn" class="btn-primary btn-large">
+                                <i class="fas fa-play"></i> Run Complete Test
+                            </button>
+                        </div>
+
+                        <div class="test-section">
+                            <h3>Individual Tests</h3>
+                            <div class="individual-tests">
+                                <button id="testMemoryBtn" class="btn-secondary">
+                                    <i class="fas fa-brain"></i> Test Memory
+                                </button>
+                                <button id="testRagOnlyBtn" class="btn-secondary">
+                                    <i class="fas fa-search"></i> Test RAG
+                                </button>
+                                <button id="testMcpOnlyBtn" class="btn-secondary">
+                                    <i class="fas fa-tools"></i> Test MCP
+                                </button>
+                                <button id="systemHealthBtn" class="btn-secondary">
+                                    <i class="fas fa-heartbeat"></i> System Health
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="test-section">
+                            <h3>Test Results</h3>
+                            <div id="testResults" class="test-results">
+                                <p>No test results available</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div class="tab-content" id="analyticsTab">
+                    <div class="analytics-container">
+                        <div class="analytics-section">
+                            <h3>System Statistics</h3>
+                            <button id="refreshStatsBtn" class="btn-primary">
+                                <i class="fas fa-refresh"></i> Refresh Stats
+                            </button>
+                            <div id="systemStats" class="stats-display">
+                                <p>Loading system statistics...</p>
+                            </div>
+                        </div>
+
+                        <div class="analytics-section">
+                            <h3>Session History</h3>
+                            <div id="sessionHistory" class="history-display">
+                                <p>Loading session history...</p>
+                            </div>
+                        </div>
+
+                        <div class="analytics-section">
+                            <h3>MCP Usage Logs</h3>
+                            <div id="mcpLogs" class="logs-display">
+                                <p>Loading MCP logs...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p id="loadingText">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

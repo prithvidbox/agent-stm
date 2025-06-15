@@ -1,0 +1,19 @@
+{
+  "name": "http-tools-mcp-server",
+  "version": "1.0.0",
+  "description": "HTTP-based MCP server with working tools",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "keywords": [
+    "mcp",
+    "http",
+    "tools"
+  ]
+}
