@@ -68,6 +68,14 @@ export class MCPManager {
         port: 3003,
         category: 'utilities',
         enabled: false
+      },
+      {
+        name: 'browserbase',
+        description: 'Cloud browser automation with Browserbase - web scraping, screenshots, and browser control',
+        url: 'stdio://../mcp-servers/browserbase/server.js',
+        port: null,
+        category: 'browser',
+        enabled: process.env.BROWSERBASE_ENABLED === 'true'
       }
     ];
 
